@@ -2,13 +2,13 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SliderControlledMovement : MonoBehaviour
+public class SliderControlledOppositeMovement : MonoBehaviour
 {
     public Slider movementSlider; 
     public float speed = 5f;      
     private SpriteRenderer spriteRenderer;
 
-    
+    // Define boundaries for the character's movement
     public float leftBoundary = 0f; 
     public float rightBoundary = 68f; 
 
@@ -29,29 +29,27 @@ public class SliderControlledMovement : MonoBehaviour
         if (movementSlider != null)
         {
             
-            float direction = movementSlider.value;
+            float direction = -movementSlider.value;
 
-           
+            
             transform.Translate(Vector3.right * direction * speed * Time.deltaTime);
 
-            // Boundary
+            //boundaries
             Vector3 clampedPosition = transform.position;
             clampedPosition.x = Mathf.Clamp(clampedPosition.x, leftBoundary, rightBoundary);
             transform.position = clampedPosition;
 
             
-            if (direction > 0)
+            if (direction < 0)
             {
                 spriteRenderer.flipX = true; 
             }
-            else if (direction < 0)
+            else if (direction > 0)
             {
                 spriteRenderer.flipX = false; 
             }
         }
     }
 }
-
-
 
 

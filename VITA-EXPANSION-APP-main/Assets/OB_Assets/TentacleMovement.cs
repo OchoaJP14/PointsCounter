@@ -1,23 +1,24 @@
-using System.Diagnostics;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SliderControlledMovement : MonoBehaviour
+public class TentacleMovement : MonoBehaviour
 {
-    public Slider movementSlider; 
-    public float speed = 5f;      
+    public Slider movementSlider;
+    public float speed = 5f;
     private SpriteRenderer spriteRenderer;
 
-    
-    public float leftBoundary = 0f; 
-    public float rightBoundary = 68f; 
+    // Define boundaries for the character's movement
+    public float leftBoundary = -10f;
+    public float rightBoundary = 58f;
 
     private void Start()
     {
-        
+
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        
+
         if (spriteRenderer == null)
         {
             UnityEngine.Debug.LogError("SpriteRenderer not found on the character!");
@@ -28,30 +29,19 @@ public class SliderControlledMovement : MonoBehaviour
     {
         if (movementSlider != null)
         {
-            
-            float direction = movementSlider.value;
 
-           
+            float direction = -movementSlider.value;
+
+
             transform.Translate(Vector3.right * direction * speed * Time.deltaTime);
 
-            // Boundary
+            //boundaries
             Vector3 clampedPosition = transform.position;
             clampedPosition.x = Mathf.Clamp(clampedPosition.x, leftBoundary, rightBoundary);
             transform.position = clampedPosition;
 
-            
-            if (direction > 0)
-            {
-                spriteRenderer.flipX = true; 
-            }
-            else if (direction < 0)
-            {
-                spriteRenderer.flipX = false; 
-            }
+
+         
         }
     }
 }
-
-
-
-
